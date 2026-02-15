@@ -210,58 +210,165 @@
 
         const materiData = {
             1: {
-                title: "Instalasi Linux & Windows",
+                title: "Instalasi Linux",
                 pages: [
                     {
-                        subtitle: "Persiapan Hardware",
+                        subtitle: "Konsep Dunia Paralel",
                         body: `
                             <div class="space-y-4">
-                                <p>Sebelum memulai instalasi, pastikan hardware Anda memenuhi standar minimum untuk menjalankan Sistem Operasi Jaringan.</p>
+                                <p>Kenapa VMware? Karena kalau kamu instal langsung di harddisk (Dual Boot), risikonya adalah Bootloader Windows bisa rusak kalau kamu salah langkah. Dengan VMware, Linux-mu cuma berupa satu folder file di Windows. Kalau kamu sudah nggak butuh, tinggal klik kanan, pilih <strong>Delete from Disk</strong>, dan laptopmu kembali bersih seperti semula. Efisien, kan?</p>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Cek Amunisi (Hardware Check)",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Sebelum "ngegas", cek dulu laptopmu. Linux itu enteng, tapi menjalankan "dua OS sekaligus" butuh tenaga:</p>
                                 <ul class="space-y-2">
-                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>CPU:</strong> Dual Core 2.0GHz+</li>
-                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>RAM:</strong> Minimal 2GB (Server Core) / 4GB (GUI)</li>
-                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>Storage:</strong> 20GB untuk Linux, 40GB untuk Windows Server</li>
+                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>RAM:</strong> Kalau RAM-mu 8GB, kasih 3GB atau 4GB ke Linux. Kalau RAM-mu 16GB, kasih 8GB biar ngebutnya kayak jet.</li>
+                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>Virtualization Technology (VT-x/AMD-V):</strong> Ini penting! Kadang VMware nggak mau jalan karena fitur ini mati di BIOS laptopmu.</li>
                                 </ul>
-                                <div class="p-4 bg-white/5 rounded-lg border-l-4 border-silver mt-6">
-                                    <p class="text-sm italic">Tip: Gunakan Virtual Machine (VirtualBox/VMware) untuk simulasi awal sebelum ke hardware asli.</p>
+                                <p>Cara ngeceknya: Buka <strong>Task Manager → Performance → CPU</strong>. Lihat tulisan "Virtualization: Enabled". Kalau "Disabled", kamu harus masuk BIOS laptop dulu buat nyalain.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Arsitektur Komputer \"Gaib\"",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Pas bikin VM baru, ada pilihan <em>Store virtual disk as a single file</em> atau <em>multiple files</em>.</p>
+                                <ul class="list-disc ml-6 space-y-2">
+                                    <li><strong>Pilih Single File:</strong> Biar performanya lebih stabil dan nggak berantakan di folder Windows-mu.</li>
+                                    <li><strong>Allocate All Disk Space Now:</strong> JANGAN dicentang. Biar harddisk-mu nggak langsung kepotong 20GB. Biarkan dia tumbuh perlahan sesuai data yang kamu isi di Linux.</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Langkah Eksekusi (The Big Moment)",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Begitu instalasi berjalan, ada bagian "Installation Type".</p>
+                                <p>Di VMware, kamu nggak perlu takut pilih <strong>"Erase Disk and Install Ubuntu"</strong>. Banyak orang pemula gemeteran di sini karena takut data fotonya di Windows hilang. Ingat: VMware itu punya "Harddisk Bohongan" sendiri. Jadi "Erase Disk" di sini cuma menghapus isi harddisk bohongannya. Data skripsimu di Windows tetap aman di tempatnya.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Sempurnakan Tampilan (VMware Tools)",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Tanpa langkah ini, Linux-mu bakal terasa kaku. Gambarnya pecah-pecah dan nggak bisa copy-paste teks dari Windows ke Linux.</p>
+                                <p>Buka Terminal (tekan <strong>Ctrl + Alt + T</strong>).</p>
+                                <div class="p-4 bg-white/5 border border-silver/20 rounded">
+                                    <code class="text-gold text-sm block">sudo apt update<br>sudo apt install open-vm-tools-desktop</code>
+                                    <p class="text-xs mt-2 text-gray-500">Restart setelah instalasi. Sekarang kamu bisa drag-and-drop file langsung dari desktop Windows ke dalam desktop Linux!</p>
                                 </div>
                             </div>
                         `
                     },
                     {
-                        subtitle: "Langkah Instalasi Linux (Debian)",
+                        subtitle: "Setting Internet (NAT vs Bridge)",
                         body: `
                             <div class="space-y-4">
-                                <ol class="list-decimal ml-6 space-y-3">
-                                    <li>Booting melalui Media Instalasi (Flashdisk/ISO).</li>
-                                    <li>Pilih menu <strong>Install</strong> atau <strong>Graphical Install</strong>.</li>
-                                    <li>Konfigurasi Hostname, Domain, dan Password Root.</li>
-                                    <li>Partisi Disk: Gunakan metode <strong>Guided - use entire disk</strong> untuk pemula atau <strong>Manual</strong> untuk LVM.</li>
-                                    <li>Pilih Software: Untuk server, cukup pilih <strong>SSH Server</strong> dan <strong>Standard System Utilities</strong>.</li>
-                                </ol>
+                                <p>Ini sering jadi perdebatan di tongkrongan IT:</p>
+                                <ul class="list-disc ml-6 space-y-2">
+                                    <li><strong>NAT (Default):</strong> Linux-mu "nebeng" koneksi Windows. Cocok buat yang mau sekadar browsing.</li>
+                                    <li><strong>Bridge:</strong> Linux-mu dapet IP sendiri dari router Wi-Fi, seolah-olah dia perangkat terpisah. Cocok kalau kamu mau belajar bikin Server atau Hacking (Lab keamanan).</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Pertolongan Pertama (Troubleshooting)",
+                        body: `
+                            <div class="space-y-4">
+                                <p><strong>Linux Macet (Freeze):</strong> Jangan langsung matiin laptop! Klik menu <strong>VM</strong> di pojok kiri atas → <strong>Power → Reset</strong>. Itu kayak mencet tombol reset di casing PC.</p>
+                                <p><strong>Layar Hitam Terus:</strong> Cek di setting VM, bagian <strong>Display</strong>, coba matikan centang "Accelerate 3D Graphics". Kadang driver VGA laptop nggak cocok sama fitur ini.</p>
                             </div>
                         `
                     }
                 ]
             },
             2: {
-                title: "Web Server (HTTP/HTTPS)",
+                title: "Web Server",
                 pages: [
                     {
-                        subtitle: "Konsep & Arsitektur",
+                        subtitle: "Kenalan Dulu Sama Web Server",
                         body: `
                             <div class="space-y-4">
-                                <p>Web Server bertugas menyimpan, memproses, dan mengirimkan halaman web ke browser klien melalui protokol HTTP atau HTTPS (Port 80/443).</p>
-                                <div class="grid grid-cols-2 gap-4 mt-4">
-                                    <div class="p-4 glass-card text-center border-gold">
-                                        <h5 class="text-gold font-bold uppercase mb-2">APACHE</h5>
-                                        <p class="text-xs">Populer, modular, dan handal.</p>
-                                    </div>
-                                    <div class="p-4 glass-card text-center border-silver">
-                                        <h5 class="text-silver font-bold uppercase mb-2">NGINX</h5>
-                                        <p class="text-xs">Ringan, cepat, dan efisien.</p>
-                                    </div>
-                                </div>
+                                <p>Pernah penasaran kenapa website bisa muncul setelah kita klik Enter? Itu semua berkat Web Server. Anggap saja ia adalah "pelayan digital" yang bekerja di balik layar. Tugasnya simpel: menerima pesanan dari browser kamu dan mengirimkan kembali data website yang diminta.</p>
+                                <p>Beberapa pelayan yang paling populer saat ini adalah <strong>Apache</strong>, <strong>Nginx</strong>, <strong>LiteSpeed</strong>, dan <strong>Microsoft IIS</strong>.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Cara Kerja Web Server",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Cara kerjanya mirip seperti memesan makanan di restoran. Saat kamu mengetik alamat website, browser bertindak sebagai pelayan yang membawa catatan pesananmu ke dapur (Web Server). Di sana, server akan mencari bahan-bahan seperti file HTML, gambar, dan kode lainnya, lalu mengirimkannya kembali ke meja kamu (browser) untuk disajikan menjadi halaman website yang utuh.</p>
+                                <p>Komunikasi ini berjalan melalui protokol <strong>HTTP</strong>, atau <strong>HTTPS</strong> jika ingin lebih aman.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Jenis-Jenis Web Server",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Setiap web server punya "spesialisasi" masing-masing:</p>
+                                <ul class="list-disc ml-6 space-y-2">
+                                    <li><strong>Apache:</strong> Legendaris, stabil, dan ramah pemula.</li>
+                                    <li><strong>Nginx:</strong> Ringan dan cepat, sering dipakai untuk menangani trafik besar.</li>
+                                    <li><strong>LiteSpeed:</strong> Banyak fitur performa, populer di hosting premium.</li>
+                                    <li><strong>Microsoft IIS:</strong> Terintegrasi dengan ekosistem Windows dan .NET.</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Komponen Penting Dalam Web Server",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Web server adalah perpaduan antara <strong>Hardware</strong> (CPU, RAM, Storage) dan <strong>Software</strong> (Sistem Operasi, aplikasi server seperti Apache/Nginx). Selain itu, Database seperti <strong>MySQL</strong> atau <strong>PostgreSQL</strong> berfungsi sebagai gudang penyimpanan data agar website bisa berjalan secara dinamis.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Metode Setup Web Server",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Memasang web server bisa disesuaikan dengan kebutuhanmu:</p>
+                                <ul class="list-disc ml-6 space-y-2">
+                                    <li><strong>Local Server:</strong> Untuk belajar gunakan XAMPP atau Laragon agar komputer bisa menjalankan website secara offline.</li>
+                                    <li><strong>Shared Hosting:</strong> Murah dan praktis, satu server dipakai bersama.</li>
+                                    <li><strong>VPS (Virtual Private Server):</strong> Lebih bebas, kendali penuh atas OS servermu.</li>
+                                    <li><strong>Dedicated Server:</strong> Satu server fisik khusus untuk kamu sendiri — paling kuat dan mahal.</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Keamanan Web Server",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Keamanan web server adalah fondasi utama dalam menjaga integritas data dan kepercayaan pengguna.</p>
+                                <ul class="list-disc ml-6 space-y-2">
+                                    <li><strong>SSL (HTTPS):</strong> Mengamankan data yang berpindah antara pengunjung dan server.</li>
+                                    <li><strong>Firewall:</strong> Menjaga sistem dari akses tak diundang dengan memfilter trafik berbahaya.</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Optimasi & Performa",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Lemot adalah musuh utama website. Berikut beberapa solusi optimasi:</p>
+                                <ul class="list-disc ml-6 space-y-2">
+                                    <li><strong>Caching:</strong> Menyimpan salinan data sementara yang sering diakses untuk mengurangi beban CPU dan mempercepat loading.</li>
+                                    <li><strong>Load Balancer:</strong> Membagi trafik ke beberapa server agar tidak ada server yang kewalahan.</li>
+                                    <li><strong>CDN (Content Delivery Network):</strong> Jaringan server global yang mendekatkan data ke pengunjung.</li>
+                                </ul>
                             </div>
                         `
                     },
