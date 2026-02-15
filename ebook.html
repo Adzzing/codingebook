@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Book ASJ - Futuristic Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --silver: #C0C0C0;
+            --dark-bg: #0a0a0a;
+        }
+        body {
+            background-color: var(--dark-bg);
+            color: var(--silver);
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-tech { font-family: 'Orbitron', sans-serif; }
+        
+        .gold-gradient {
+            background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            -webkit-background-clip: text;
+            background-clip: text; /* Menambahkan properti standar untuk kompatibilitas */
+            -webkit-text-fill-color: transparent;
+        }
+
+        .silver-border {
+            border: 1px solid rgba(192, 192, 192, 0.3);
+            box-shadow: 0 0 15px rgba(192, 192, 192, 0.1);
+        }
+
+        .gold-button {
+            background: linear-gradient(45deg, #D4AF37, #F9E79F);
+            color: black;
+            transition: all 0.3s ease;
+        }
+
+        .gold-button:hover {
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            transform: scale(1.05);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .nav-item {
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            color: var(--gold);
+            text-shadow: 0 0 8px var(--gold);
+        }
+
+        /* Scanline effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 9999;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .page-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(192, 192, 192, 0.3);
+            display: inline-block;
+            margin: 0 5px;
+        }
+        .page-indicator.active {
+            background: var(--gold);
+            box-shadow: 0 0 10px var(--gold);
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-300">
+
+    <!-- Header / Navbar -->
+    <nav class="fixed top-0 w-full z-50 glass-card m-2 border-none px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-tech font-bold gold-gradient uppercase tracking-widest">KELOMPOK 1</div>
+        <div class="hidden md:flex space-x-8 font-semibold">
+            <button onclick="showSection('home')" class="nav-item">Beranda</button>
+            <button onclick="showSection('materi')" class="nav-item">Materi</button>
+            <button onclick="showSection('tim')" class="nav-item">Kelompok</button>
+        </div>
+        <div class="md:hidden">
+            <span class="text-gold cursor-pointer" onclick="toggleMobileMenu()">☰</span>
+        </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <main class="pt-24 min-h-screen">
+
+        <!-- SECTION: HOME -->
+        <section id="home" class="container mx-auto px-6 flex flex-col items-center text-center">
+            <div class="mt-20">
+                <h2 class="text-xl tracking-[0.5em] text-silver mb-4 uppercase">Project Digital E-Book</h2>
+                <h1 class="text-5xl md:text-7xl font-tech font-bold gold-gradient mb-6">ADMINISTRASI SISTEM JARINGAN</h1>
+                <h2 class="text-xl tracking-[0.5em] text-silver mb-4 uppercase">“Mengintegrasikan Teknologi, Menjaga Keamanan, dan Mengoptimalkan Performa Jaringan Setiap Saat.”</h2>
+                <button onclick="loadBab(1)" class="gold-button px-10 py-4 rounded-full font-bold uppercase tracking-widest text-sm">Masuk Dashboard Materi</button>
+            </div>
+            
+            <div class="mt-24 grid grid-cols-2 md:grid-cols-5 gap-6 w-full max-w-5xl">
+                <div class="glass-card p-6 text-center silver-border transform hover:-translate-y-2 transition cursor-pointer" onclick="loadBab(1)">
+                    <span class="text-gold block mb-2 font-tech text-2xl">I</span>
+                    <p class="text-xs font-bold uppercase">Installation</p>
+                </div>
+                <div class="glass-card p-6 text-center silver-border transform hover:-translate-y-2 transition cursor-pointer" onclick="loadBab(2)">
+                    <span class="text-gold block mb-2 font-tech text-2xl">II</span>
+                    <p class="text-xs font-bold uppercase">Web Server</p>
+                </div>
+                <div class="glass-card p-6 text-center silver-border transform hover:-translate-y-2 transition cursor-pointer" onclick="loadBab(3)">
+                    <span class="text-gold block mb-2 font-tech text-2xl">III</span>
+                    <p class="text-xs font-bold uppercase">Routing</p>
+                </div>
+                <div class="glass-card p-6 text-center silver-border transform hover:-translate-y-2 transition cursor-pointer" onclick="loadBab(4)">
+                    <span class="text-gold block mb-2 font-tech text-2xl">IV</span>
+                    <p class="text-xs font-bold uppercase">Sharing</p>
+                </div>
+                <div class="glass-card p-6 text-center silver-border transform hover:-translate-y-2 transition cursor-pointer" onclick="loadBab(5)">
+                    <span class="text-gold block mb-2 font-tech text-2xl">V</span>
+                    <p class="text-xs font-bold uppercase">DNS</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: MATERI -->
+        <section id="materi" class="hidden container mx-auto px-6 py-12">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Sidebar Nav Materi -->
+                <div class="lg:w-1/4">
+                    <div class="sticky top-28 space-y-3">
+                        <h3 class="font-tech text-gold mb-6 border-b border-gold pb-2 uppercase tracking-tighter">NAVIGASI MODUL</h3>
+                        <div id="bab-list" class="space-y-3">
+                            <!-- Bab buttons generated via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Area -->
+                <div class="lg:w-3/4 flex flex-col">
+                    <div class="glass-card p-8 silver-border min-h-[500px]" id="content-display">
+                        <div id="bab-placeholder" class="text-center py-40">
+                            <p class="text-gold font-tech animate-pulse text-xl uppercase tracking-widest">MENUNGGU INPUT... PILIH BAB DI SAMPING</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: TIM -->
+        <section id="tim" class="hidden container mx-auto px-6 py-12 text-center">
+            <h2 class="text-4xl font-tech gold-gradient mb-4 uppercase">Dewan Pengembang</h2>
+            <p class="text-silver mb-12 tracking-widest font-light">CORE RESEARCH & DEVELOPMENT TEAM</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                <div class="glass-card p-8 silver-border group hover:border-gold transition-all duration-500">
+                    <div class="w-24 h-24 bg-gradient-to-tr from-gold to-silver rounded-full mx-auto mb-6 flex items-center justify-center text-black font-bold text-3xl shadow-[0_0_15px_rgba(212,175,55,0.5)]">D</div>
+                    <h4 class="text-gold font-bold text-lg">Dimas Zikry Islami</h4>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-2">Lead Architect</p>
+                </div>
+                <div class="glass-card p-8 silver-border group hover:border-gold transition-all duration-500">
+                    <div class="w-24 h-24 bg-gradient-to-tr from-gold to-silver rounded-full mx-auto mb-6 flex items-center justify-center text-black font-bold text-3xl shadow-[0_0_15px_rgba(212,175,55,0.5)]">M</div>
+                    <h4 class="text-gold font-bold text-lg">Maulana Adzhar F.</h4>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-2">Website Creator</p>
+                </div>
+                <div class="glass-card p-8 silver-border group hover:border-gold transition-all duration-500">
+                    <div class="w-24 h-24 bg-gradient-to-tr from-gold to-silver rounded-full mx-auto mb-6 flex items-center justify-center text-black font-bold text-3xl shadow-[0_0_15px_rgba(212,175,55,0.5)]">M</div>
+                    <h4 class="text-gold font-bold text-lg">Meisya Haya M.</h4>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-2">UI Strategist</p>
+                </div>
+                <div class="glass-card p-8 silver-border group hover:border-gold transition-all duration-500">
+                    <div class="w-24 h-24 bg-gradient-to-tr from-gold to-silver rounded-full mx-auto mb-6 flex items-center justify-center text-black font-bold text-3xl shadow-[0_0_15px_rgba(212,175,55,0.5)]">M</div>
+                    <h4 class="text-gold font-bold text-lg">Muhammad Rafi R.</h4>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-2">Tech Writer</p>
+                </div>
+                <div class="glass-card p-8 silver-border group hover:border-gold transition-all duration-500">
+                    <div class="w-24 h-24 bg-gradient-to-tr from-gold to-silver rounded-full mx-auto mb-6 flex items-center justify-center text-black font-bold text-3xl shadow-[0_0_15px_rgba(212,175,55,0.5)]">R</div>
+                    <h4 class="text-gold font-bold text-lg">Rifanti Syinklia A.</h4>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mt-2">UI Strategist</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 py-10 border-t border-gold/20 text-center">
+        <div class="container mx-auto px-6">
+            <p class="text-gold font-tech mb-2">KELOMPOK 1 TECHNOLOGY</p>
+            <p class="text-xs tracking-[0.3em]">&copy; 2026 ASJ DIGITAL BOOK - MULTI-PAGE EXPERIENCE</p>
+        </div>
+    </footer>
+
+    <script>
+        // State Management
+        let currentBab = 1;
+        let currentPage = 0;
+
+        const materiData = {
+            1: {
+                title: "Instalasi Linux & Windows",
+                pages: [
+                    {
+                        subtitle: "Persiapan Hardware",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Sebelum memulai instalasi, pastikan hardware Anda memenuhi standar minimum untuk menjalankan Sistem Operasi Jaringan.</p>
+                                <ul class="space-y-2">
+                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>CPU:</strong> Dual Core 2.0GHz+</li>
+                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>RAM:</strong> Minimal 2GB (Server Core) / 4GB (GUI)</li>
+                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>Storage:</strong> 20GB untuk Linux, 40GB untuk Windows Server</li>
+                                </ul>
+                                <div class="p-4 bg-white/5 rounded-lg border-l-4 border-silver mt-6">
+                                    <p class="text-sm italic">Tip: Gunakan Virtual Machine (VirtualBox/VMware) untuk simulasi awal sebelum ke hardware asli.</p>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Langkah Instalasi Linux (Debian)",
+                        body: `
+                            <div class="space-y-4">
+                                <ol class="list-decimal ml-6 space-y-3">
+                                    <li>Booting melalui Media Instalasi (Flashdisk/ISO).</li>
+                                    <li>Pilih menu <strong>Install</strong> atau <strong>Graphical Install</strong>.</li>
+                                    <li>Konfigurasi Hostname, Domain, dan Password Root.</li>
+                                    <li>Partisi Disk: Gunakan metode <strong>Guided - use entire disk</strong> untuk pemula atau <strong>Manual</strong> untuk LVM.</li>
+                                    <li>Pilih Software: Untuk server, cukup pilih <strong>SSH Server</strong> dan <strong>Standard System Utilities</strong>.</li>
+                                </ol>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            2: {
+                title: "Web Server (HTTP/HTTPS)",
+                pages: [
+                    {
+                        subtitle: "Konsep & Arsitektur",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Web Server bertugas menyimpan, memproses, dan mengirimkan halaman web ke browser klien melalui protokol HTTP atau HTTPS (Port 80/443).</p>
+                                <div class="grid grid-cols-2 gap-4 mt-4">
+                                    <div class="p-4 glass-card text-center border-gold">
+                                        <h5 class="text-gold font-bold uppercase mb-2">APACHE</h5>
+                                        <p class="text-xs">Populer, modular, dan handal.</p>
+                                    </div>
+                                    <div class="p-4 glass-card text-center border-silver">
+                                        <h5 class="text-silver font-bold uppercase mb-2">NGINX</h5>
+                                        <p class="text-xs">Ringan, cepat, dan efisien.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Topologi Web Server",
+                        body: `
+                            <div class="space-y-4 text-center">
+                                <p class="mb-6">Visualisasi bagaimana data mengalir dari Server menuju pengguna akhir.</p>
+                                <div class="p-6 bg-black/50 rounded-xl border border-gold/20 inline-block w-full">
+                                    <svg viewBox="0 0 400 220" class="w-full max-w-lg mx-auto">
+                                        <!-- Server -->
+                                        <rect x="160" y="10" width="80" height="100" rx="10" fill="none" stroke="#D4AF37" stroke-width="2" />
+                                        <path d="M170 30 H230 M170 50 H230 M170 70 H230" stroke="#D4AF37" stroke-width="1" />
+                                        <text x="200" y="100" fill="#D4AF37" text-anchor="middle" font-size="10" class="font-tech">SERVER</text>
+                                        
+                                        <!-- Connection -->
+                                        <line x1="200" y1="110" x2="200" y2="150" stroke="#C0C0C0" stroke-width="2" />
+                                        
+                                        <!-- Clients -->
+                                        <circle cx="100" cy="180" r="25" fill="none" stroke="#C0C0C0" stroke-width="2" />
+                                        <text x="100" y="215" fill="#C0C0C0" text-anchor="middle" font-size="8">KLIEN A</text>
+                                        
+                                        <circle cx="300" cy="180" r="25" fill="none" stroke="#C0C0C0" stroke-width="2" />
+                                        <text x="300" y="215" fill="#C0C0C0" text-anchor="middle" font-size="8">KLIEN B</text>
+                                        
+                                        <path d="M200 150 L120 170 M200 150 L280 170" stroke="#C0C0C0" stroke-dasharray="4" />
+                                    </svg>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            3: {
+                title: "Routing (Statis & Dinamis)",
+                pages: [
+                    {
+                        subtitle: "Dasar Routing",
+                        body: `
+                            <p>Routing adalah otak dari jaringan internet. Ia menentukan "rute" tercepat agar paket data sampai ke tujuan.</p>
+                            <div class="mt-6 space-y-4">
+                                <div class="flex gap-4">
+                                    <div class="w-1 bg-gold"></div>
+                                    <div>
+                                        <h5 class="text-gold font-bold">Static Routing</h5>
+                                        <p class="text-sm">Ditentukan manual. Sangat aman tapi tidak fleksibel.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="w-1 bg-silver"></div>
+                                    <div>
+                                        <h5 class="text-silver font-bold">Dynamic Routing</h5>
+                                        <p class="text-sm">Router "berbicara" satu sama lain (OSPF, RIP, BGP) untuk mencari rute.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            },
+            4: {
+                title: "File Sharing",
+                pages: [
+                    {
+                        subtitle: "Mengenal SAMBA",
+                        body: `
+                            <p>Samba memungkinkan server Linux berkomunikasi dengan Windows seolah-olah mereka adalah bagian dari keluarga yang sama.</p>
+                            <div class="p-4 bg-white/5 border border-silver/20 rounded mt-4">
+                                <code class="text-gold text-sm block"># apt install samba smbclient</code>
+                                <p class="text-xs mt-2 text-gray-500">// Perintah instalasi pada Debian/Ubuntu</p>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Konfigurasi FTP",
+                        body: `
+                            <p>FTP (File Transfer Protocol) adalah metode tertua namun paling efisien untuk memindahkan file besar antar server.</p>
+                            <ul class="list-disc ml-6 mt-4 text-sm space-y-2">
+                                <li><strong>Port 21:</strong> Command port.</li>
+                                <li><strong>Port 20:</strong> Data transfer port.</li>
+                                <li><strong>vsftpd:</strong> Aplikasi FTP paling aman di Linux.</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            5: {
+                title: "DNS Server",
+                pages: [
+                    {
+                        subtitle: "Cara Kerja DNS",
+                        body: `
+                            <div class="flex flex-col items-center">
+                                <p class="text-center italic mb-6">"DNS adalah buku telepon Internet."</p>
+                                <div class="w-full max-w-md p-4 glass-card border-gold text-sm">
+                                    <div class="flex justify-between border-b border-white/10 pb-2 mb-2">
+                                        <span>User ketik:</span>
+                                        <span class="text-gold">www.kelompok1.com</span>
+                                    </div>
+                                    <div class="flex justify-between border-b border-white/10 pb-2 mb-2">
+                                        <span>DNS cari IP:</span>
+                                        <span class="text-gold">192.168.10.5</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Browser buka:</span>
+                                        <span class="text-gold">Halaman Web</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `
+                    }
+                ]
+            }
+        };
+
+        function showSection(id) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            
+            const targetSection = document.getElementById(id);
+            if (targetSection) targetSection.classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('text-gold', 'border-b', 'border-gold');
+            });
+            
+            if (id === 'materi' && currentBab === null) {
+                loadBab(1);
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        function createBabList() {
+            const list = document.getElementById('bab-list');
+            if (!list) return;
+            list.innerHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded glass-card hover:bg-white/10 transition flex items-center justify-between group ${currentBab === i ? 'border-gold bg-white/5' : 'silver-border'}`;
+                btn.innerHTML = `
+                    <span class="${currentBab === i ? 'text-gold' : ''}">BAB ${i}: ${materiData[i].title}</span>
+                    <span class="opacity-0 group-hover:opacity-100 transition text-gold">▶</span>
+                `;
+                btn.onclick = () => loadBab(i);
+                list.appendChild(btn);
+            }
+        }
+
+        function loadBab(no) {
+            currentBab = no;
+            currentPage = 0;
+            
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            const materiSection = document.getElementById('materi');
+            if (materiSection) materiSection.classList.remove('hidden');
+            
+            createBabList();
+            renderContent();
+            window.scrollTo(0, 0);
+        }
+
+        function renderContent() {
+            const bab = materiData[currentBab];
+            if (!bab) return;
+            const page = bab.pages[currentPage];
+            const display = document.getElementById('content-display');
+            if (!display) return;
+            
+            let indicators = '';
+            for(let i=0; i < bab.pages.length; i++) {
+                indicators += `<div class="page-indicator ${i === currentPage ? 'active' : ''}"></div>`;
+            }
+
+            display.innerHTML = `
+                <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+                    <div>
+                        <p class="text-gold font-tech text-xs uppercase tracking-[0.3em]">BAB ${currentBab}</p>
+                        <h2 class="text-3xl font-tech gold-gradient">${bab.title}</h2>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] text-gray-500 mb-1 uppercase tracking-widest">Progress Bab</p>
+                        <div class="flex justify-end">${indicators}</div>
+                    </div>
+                </div>
+
+                <div class="animate-fadeIn">
+                    <h3 class="text-xl font-bold text-silver mb-6 flex items-center">
+                        <span class="w-8 h-[1px] bg-gold mr-3"></span> ${page.subtitle}
+                    </h3>
+                    <div class="text-gray-300 leading-relaxed text-lg font-light">
+                        ${page.body}
+                    </div>
+                </div>
+
+                <div class="mt-auto pt-10 flex justify-between items-center">
+                    <button onclick="prevPage()" class="px-4 py-2 border border-silver/30 text-xs uppercase tracking-widest hover:bg-white/5 disabled:opacity-20" ${currentPage === 0 ? 'disabled' : ''}>
+                        &larr; Prev
+                    </button>
+                    
+                    <span class="text-[10px] text-gray-500 font-tech">HALAMAN ${currentPage + 1} / ${bab.pages.length}</span>
+
+                    <button onclick="nextPage()" class="px-4 py-2 border border-gold/30 text-gold text-xs uppercase tracking-widest hover:bg-gold hover:text-black transition duration-300">
+                        ${currentPage === bab.pages.length - 1 ? 'Next Bab &raquo;' : 'Next &rarr;'}
+                    </button>
+                </div>
+            `;
+        }
+
+        function nextPage() {
+            if (currentPage < materiData[currentBab].pages.length - 1) {
+                currentPage++;
+                renderContent();
+            } else {
+                if (currentBab < 5) loadBab(currentBab + 1);
+                else loadBab(1);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                renderContent();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.md\\:flex');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        window.onload = () => {
+            currentBab = null;
+            showSection('home');
+        };
+
+    </script>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</body>
+</html>
