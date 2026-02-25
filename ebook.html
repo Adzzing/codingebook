@@ -95,6 +95,7 @@
             <button onclick="showSection('home')" class="nav-item">Beranda</button>
             <button onclick="showSection('materi')" class="nav-item">Materi</button>
             <button onclick="showSection('tim')" class="nav-item">Kelompok</button>
+            <button onclick="showSection('progress')" class="nav-item">Progress</button>
         </div>
         <div class="md:hidden">
             <span class="text-gold cursor-pointer" onclick="toggleMobileMenu()">☰</span>
@@ -194,6 +195,17 @@
             </div>
         </section>
 
+        <!-- SECTION: PROGRESS -->
+        <section id="progress" class="hidden container mx-auto px-6 py-12">
+            <h2 class="text-4xl font-tech gold-gradient mb-4 uppercase">Progress Pembelajaran</h2>
+            <p class="text-silver mb-6">Ringkasan progres Anda pada modul dan halaman.</p>
+            <div id="progress-display" class="glass-card p-8 silver-border min-h-[200px] text-center">
+                <div class="flex flex-col items-center">
+                    <img src="assets/ebook1.jpeg" alt="Progress" class="max-w-[600px] w-full rounded shadow-md mx-auto" />
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="mt-20 py-10 border-t border-gold/20 text-center">
@@ -213,215 +225,188 @@
                 title: "Instalasi Linux",
                 pages: [
                     {
-                        subtitle: "Konsep Dunia Paralel",
+                        subtitle: "Konsep dan Pengertian",
                         body: `
                             <div class="space-y-4">
-                                <p>Kenapa VMware? Karena kalau kamu instal langsung di harddisk (Dual Boot), risikonya adalah Bootloader Windows bisa rusak kalau kamu salah langkah. Dengan VMware, Linux-mu cuma berupa satu folder file di Windows. Kalau kamu sudah nggak butuh, tinggal klik kanan, pilih <strong>Delete from Disk</strong>, dan laptopmu kembali bersih seperti semula. Efisien, kan?</p>
+                                <p> Pilih pakai VMware buat instal Linux itu langkah paling cari aman sekaligus praktis. Masalah utama kalau nekat dual boot langsung ke harddisk itu risiko salah partisi atau bootloader yang bisa bikin Windows tiba-tiba "nambok" (error/nggak mau masuk).
+​Nah, kalau di VMware, Linux itu cuma numpang lewat sebagai sistem virtual. Jadi, dia nggak bakal ngacak-ngacak sistem utama Windows kamu sama sekali. Enaknya lagi, kamu bisa buka Linux sambil dengerin lagu atau ngerjain tugas di Windows tanpa perlu ribet restart laptop bolak-balik.
+​Kalau sudah bosan atau merasa nggak butuh lagi, ya tinggal hapus aja filenya kayak hapus folder biasa. Makanya cara ini paling pas buat yang baru mau belajar atau praktikum, karena bebas mau "ngancurin" sistemnya kayak gimana pun, laptop asli tetap aman sentosa.</p>
                             </div>
                         `
                     },
                     {
-                        subtitle: "Cek Amunisi (Hardware Check)",
+                        subtitle: "Persiapan Bahan",
                         body: `
                             <div class="space-y-4">
-                                <p>Sebelum "ngegas", cek dulu laptopmu. Linux itu enteng, tapi menjalankan "dua OS sekaligus" butuh tenaga:</p>
-                                <ul class="space-y-2">
-                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>RAM:</strong> Kalau RAM-mu 8GB, kasih 3GB atau 4GB ke Linux. Kalau RAM-mu 16GB, kasih 8GB biar ngebutnya kayak jet.</li>
-                                    <li class="flex items-center"><span class="text-gold mr-2">▶</span> <strong>Virtualization Technology (VT-x/AMD-V):</strong> Ini penting! Kadang VMware nggak mau jalan karena fitur ini mati di BIOS laptopmu.</li>
-                                </ul>
-                                <p>Cara ngeceknya: Buka <strong>Task Manager → Performance → CPU</strong>. Lihat tulisan "Virtualization: Enabled". Kalau "Disabled", kamu harus masuk BIOS laptop dulu buat nyalain.</p>
+                                <p>Persiapan Bahan
+​Software VMware: Download dan instal VMware Workstation Player (Gratis untuk penggunaan pribadi).
+​File ISO Linux: Download ISO (contoh: Debian atau Ubuntu).
+​Catatan: Debian sangat cocok jika kamu ingin mencoba sistem tanpa sudo sejak awal.</p>
+                             </div>
+                        `
+                    },
+                    {
+                        subtitle: "Langkah 1 Membuat Virtual Machine",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Langkah 1: Membuat Virtual Machine (Wadah)
+​Buka VMware, pilih "Create a New Virtual Machine".
+​Pilih "Installer disc image file (iso)", lalu cari file ISO Linux yang sudah kamu download.
+​Nama VM: Beri nama (misal: "Belajar Linux").
+​Kapasitas Disk: Tentukan sizenya (minimal 20GB). Pilih "Store virtual disk as a single file" agar performa lebih stabil.
+​Customize Hardware: Atur RAM (minimal 2GB/2048MB) dan Processor (minimal 2 Core). Klik Finish.</p>
                             </div>
                         `
                     },
                     {
-                        subtitle: "Arsitektur Komputer \"Gaib\"",
+                        subtitle: "Langkah 2 Proses Instalasi",
                         body: `
                             <div class="space-y-4">
-                                <p>Pas bikin VM baru, ada pilihan <em>Store virtual disk as a single file</em> atau <em>multiple files</em>.</p>
-                                <ul class="list-disc ml-6 space-y-2">
-                                    <li><strong>Pilih Single File:</strong> Biar performanya lebih stabil dan nggak berantakan di folder Windows-mu.</li>
-                                    <li><strong>Allocate All Disk Space Now:</strong> JANGAN dicentang. Biar harddisk-mu nggak langsung kepotong 20GB. Biarkan dia tumbuh perlahan sesuai data yang kamu isi di Linux.</li>
-                                </ul>
+                                <p>Langkah 2: Proses Instalasi 
+​Setelah VM dinyalakan (klik tombol Play), kamu akan masuk ke installer Linux.
+​1. Konfigurasi User (Kunci Utama)
+​Saat proses instalasi sampai di bagian "Network & Users":
+​Root Password: Masukkan password untuk Root. Jangan dikosongkan.
+​User Baru: Kamu tetap harus membuat satu user biasa (misal: "budi").
+​Kenapa? Karena di Debian, jika kamu mengisi Root Password, sistem secara otomatis tidak akan menginstal sudo. Kamu akan dipaksa menggunakan perintah su - untuk jadi admin.
+​2. Partisi Disk
+​Pilih "Guided - use entire disk". Karena ini di dalam VMware, kamu tidak perlu takut data di Windows-mu terhapus. Installer hanya akan menghapus "hardisk virtual" yang tadi kamu buat sebesar 20GB.
+​3. Desktop Environment
+​Pilih tampilan yang kamu suka (GNOME, XFCE, atau KDE Plasma). Tunggu hingga proses selesai dan minta Restart.</p>
                             </div>
                         `
                     },
-                    {
-                        subtitle: "Langkah Eksekusi (The Big Moment)",
-                        body: `
-                            <div class="space-y-4">
-                                <p>Begitu instalasi berjalan, ada bagian "Installation Type".</p>
-                                <p>Di VMware, kamu nggak perlu takut pilih <strong>"Erase Disk and Install Ubuntu"</strong>. Banyak orang pemula gemeteran di sini karena takut data fotonya di Windows hilang. Ingat: VMware itu punya "Harddisk Bohongan" sendiri. Jadi "Erase Disk" di sini cuma menghapus isi harddisk bohongannya. Data skripsimu di Windows tetap aman di tempatnya.</p>
-                            </div>
-                        `
-                    },
-                    {
-                        subtitle: "Sempurnakan Tampilan (VMware Tools)",
-                        body: `
-                            <div class="space-y-4">
-                                <p>Tanpa langkah ini, Linux-mu bakal terasa kaku. Gambarnya pecah-pecah dan nggak bisa copy-paste teks dari Windows ke Linux.</p>
-                                <p>Buka Terminal (tekan <strong>Ctrl + Alt + T</strong>).</p>
-                                <div class="p-4 bg-white/5 border border-silver/20 rounded">
-                                    <code class="text-gold text-sm block">apt update<br>apt install open-vm-tools-desktop</code>
-                                    <p class="text-xs mt-2 text-gray-500">Restart setelah instalasi. Sekarang kamu bisa drag-and-drop file langsung dari desktop Windows ke dalam desktop Linux!</p>
-                                </div>
-                            </div>
-                        `
-                    },
-                    {
-                        subtitle: "Setting Internet (NAT vs Bridge)",
-                        body: `
-                            <div class="space-y-4">
-                                <p>Ini sering jadi perdebatan di tongkrongan IT:</p>
-                                <ul class="list-disc ml-6 space-y-2">
-                                    <li><strong>NAT (Default):</strong> Linux-mu "nebeng" koneksi Windows. Cocok buat yang mau sekadar browsing.</li>
-                                    <li><strong>Bridge:</strong> Linux-mu dapet IP sendiri dari router Wi-Fi, seolah-olah dia perangkat terpisah. Cocok kalau kamu mau belajar bikin Server atau Hacking (Lab keamanan).</li>
-                                </ul>
-                            </div>
-                        `
-                    },
-                    {
-                        subtitle: "Pertolongan Pertama (Troubleshooting)",
-                        body: `
-                            <div class="space-y-4">
-                                <p><strong>Linux Macet (Freeze):</strong> Jangan langsung matiin laptop! Klik menu <strong>VM</strong> di pojok kiri atas → <strong>Power → Reset</strong>. Itu kayak mencet tombol reset di casing PC.</p>
-                                <p><strong>Layar Hitam Terus:</strong> Cek di setting VM, bagian <strong>Display</strong>, coba matikan centang "Accelerate 3D Graphics". Kadang driver VGA laptop nggak cocok sama fitur ini.</p>
-                            </div>
-                        `
-                    }
                 ]
             },
             2: {
                 title: "Web Server",
                 pages: [
                     {
-                        subtitle: "Kenalan Dulu Sama Web Server",
+                        subtitle: "Pengenalan Web Server",
                         body: `
                             <div class="space-y-4">
-                                <p>Pernah penasaran kenapa website bisa muncul setelah kita klik Enter? Itu semua berkat Web Server. Anggap saja ia adalah "pelayan digital" yang bekerja di balik layar. Tugasnya simpel: menerima pesanan dari browser kamu dan mengirimkan kembali data website yang diminta.</p>
-                                <p>Beberapa pelayan yang paling populer saat ini adalah <strong>Apache</strong>, <strong>Nginx</strong>, <strong>LiteSpeed</strong>, dan <strong>Microsoft IIS</strong>.</p>
+                                <p>Web server adalah sebuah program atau software yang berperan sebagai “pelayan digital” di dalam sistem website. Ketika seseorang mengetik alamat website di browser lalu menekan tombol Enter, sebenarnya browser sedang mengirim permintaan kepada web server. Web server kemudian menerima permintaan tersebut, memprosesnya, dan mengirimkan kembali data yang dibutuhkan seperti halaman HTML, gambar, atau file lainnya agar website dapat tampil di layar pengguna.</p>
+                                <p>Tanpa adanya web server, website tidak akan bisa diakses karena tidak ada sistem yang melayani dan mengirimkan data kepada pengguna.</p>
                             </div>
                         `
                     },
                     {
-                        subtitle: "Cara Kerja Web Server",
+                        subtitle: "Pengelolaan File di Apache2",
                         body: `
                             <div class="space-y-4">
-                                <p>Cara kerjanya mirip seperti memesan makanan di restoran. Saat kamu mengetik alamat website, browser bertindak sebagai pelayan yang membawa catatan pesananmu ke dapur (Web Server). Di sana, server akan mencari bahan-bahan seperti file HTML, gambar, dan kode lainnya, lalu mengirimkannya kembali ke meja kamu (browser) untuk disajikan menjadi halaman website yang utuh.</p>
-                                <p>Komunikasi ini berjalan melalui protokol <strong>HTTP</strong>, atau <strong>HTTPS</strong> jika ingin lebih aman.</p>
+                                <p>Setelah Apache2 aktif, pengelolaan file website dilakukan di direktori utama <code>/var/www/html/</code>. Sebagai root, kamu memiliki otoritas penuh untuk memodifikasi file index default.</p>
                             </div>
                         `
                     },
                     {
-                        subtitle: "Jenis-Jenis Web Server",
+                        subtitle: "Mengedit index.html",
                         body: `
                             <div class="space-y-4">
-                                <p>Setiap web server punya "spesialisasi" masing-masing:</p>
-                                <ul class="list-disc ml-6 space-y-2">
-                                    <li><strong>Apache:</strong> Legendaris, stabil, dan ramah pemula.</li>
-                                    <li><strong>Nginx:</strong> Ringan dan cepat, sering dipakai untuk menangani trafik besar.</li>
-                                    <li><strong>LiteSpeed:</strong> Banyak fitur performa, populer di hosting premium.</li>
-                                    <li><strong>Microsoft IIS:</strong> Terintegrasi dengan ekosistem Windows dan .NET.</li>
-                                </ul>
+                                <p>Kamu bisa menghapus file bawaan dengan perintah <code>rm /var/www/html/index.html</code>, lalu membuat file baru menggunakan editor teks melalui perintah <code>nano /var/www/html/index.html</code>. Di dalam editor tersebut, kamu bisa mengisi kode HTML sederhana untuk kustomisasi tampilan web. Setelah selesai mengedit, simpan perubahan dengan menekan <strong>Ctrl+O</strong> lalu Enter, dan keluar dengan <strong>Ctrl+X</strong>.</p>
                             </div>
                         `
                     },
                     {
-                        subtitle: "Komponen Penting Dalam Web Server",
+                        subtitle: "Uji Coba Web Server",
                         body: `
                             <div class="space-y-4">
-                                <p>Web server adalah perpaduan antara <strong>Hardware</strong> (CPU, RAM, Storage) dan <strong>Software</strong> (Sistem Operasi, aplikasi server seperti Apache/Nginx). Selain itu, Database seperti <strong>MySQL</strong> atau <strong>PostgreSQL</strong> berfungsi sebagai gudang penyimpanan data agar website bisa berjalan secara dinamis.</p>
-                            </div>
-                        `
-                    },
-                    {
-                        subtitle: "Metode Setup Web Server",
-                        body: `
-                            <div class="space-y-4">
-                                <p>Memasang web server bisa disesuaikan dengan kebutuhanmu:</p>
-                                <ul class="list-disc ml-6 space-y-2">
-                                    <li><strong>Local Server:</strong> Untuk belajar gunakan XAMPP atau Laragon agar komputer bisa menjalankan website secara offline.</li>
-                                    <li><strong>Shared Hosting:</strong> Murah dan praktis, satu server dipakai bersama.</li>
-                                    <li><strong>VPS (Virtual Private Server):</strong> Lebih bebas, kendali penuh atas OS servermu.</li>
-                                    <li><strong>Dedicated Server:</strong> Satu server fisik khusus untuk kamu sendiri — paling kuat dan mahal.</li>
-                                </ul>
-                            </div>
-                        `
-                    },
-                    {
-                        subtitle: "Keamanan Web Server",
-                        body: `
-                            <div class="space-y-4">
-                                <p>Keamanan web server adalah fondasi utama dalam menjaga integritas data dan kepercayaan pengguna.</p>
-                                <ul class="list-disc ml-6 space-y-2">
-                                    <li><strong>SSL (HTTPS):</strong> Mengamankan data yang berpindah antara pengunjung dan server.</li>
-                                    <li><strong>Firewall:</strong> Menjaga sistem dari akses tak diundang dengan memfilter trafik berbahaya.</li>
-                                </ul>
-                            </div>
-                        `
-                    },
-                    {
-                        subtitle: "Optimasi & Performa",
-                        body: `
-                            <div class="space-y-4">
-                                <p>Lemot adalah musuh utama website. Berikut beberapa solusi optimasi:</p>
-                                <ul class="list-disc ml-6 space-y-2">
-                                    <li><strong>Caching:</strong> Menyimpan salinan data sementara yang sering diakses untuk mengurangi beban CPU dan mempercepat loading.</li>
-                                    <li><strong>Load Balancer:</strong> Membagi trafik ke beberapa server agar tidak ada server yang kewalahan.</li>
-                                    <li><strong>CDN (Content Delivery Network):</strong> Jaringan server global yang mendekatkan data ke pengunjung.</li>
-                                </ul>
-                            </div>
-                        `
-                    },
-                    {
-                        subtitle: "Topologi Web Server",
-                        body: `
-                            <div class="space-y-4 text-center">
-                                <p class="mb-6">Visualisasi bagaimana data mengalir dari Server menuju pengguna akhir.</p>
-                                <div class="p-6 bg-black/50 rounded-xl border border-gold/20 inline-block w-full">
-                                    <svg viewBox="0 0 400 220" class="w-full max-w-lg mx-auto">
-                                        <!-- Server -->
-                                        <rect x="160" y="10" width="80" height="100" rx="10" fill="none" stroke="#D4AF37" stroke-width="2" />
-                                        <path d="M170 30 H230 M170 50 H230 M170 70 H230" stroke="#D4AF37" stroke-width="1" />
-                                        <text x="200" y="100" fill="#D4AF37" text-anchor="middle" font-size="10" class="font-tech">SERVER</text>
-                                        
-                                        <!-- Connection -->
-                                        <line x1="200" y1="110" x2="200" y2="150" stroke="#C0C0C0" stroke-width="2" />
-                                        
-                                        <!-- Clients -->
-                                        <circle cx="100" cy="180" r="25" fill="none" stroke="#C0C0C0" stroke-width="2" />
-                                        <text x="100" y="215" fill="#C0C0C0" text-anchor="middle" font-size="8">KLIEN A</text>
-                                        
-                                        <circle cx="300" cy="180" r="25" fill="none" stroke="#C0C0C0" stroke-width="2" />
-                                        <text x="300" y="215" fill="#C0C0C0" text-anchor="middle" font-size="8">KLIEN B</text>
-                                        
-                                        <path d="M200 150 L120 170 M200 150 L280 170" stroke="#C0C0C0" stroke-dasharray="4" />
-                                    </svg>
-                                </div>
+                                <p>Langkah terakhir adalah melakukan pengujian dengan mengecek alamat IP server melalui perintah <code>hostname -I</code>, kemudian masukkan alamat IP tersebut ke dalam browser di sistem host (Windows). Jika tampilan yang kamu buat sudah muncul, maka konfigurasi web server Apache2 telah berhasil dijalankan sepenuhnya tanpa kendala perizinan.</p>
                             </div>
                         `
                     }
                 ]
             },
             3: {
-                title: "Routing (Statis & Dinamis)",
+                title: "Routing Static ",
                 pages: [
                     {
-                        subtitle: "Dasar Routing",
+                        subtitle: "Routing Statis - Pengantar",
                         body: `
-                            <p>Routing adalah otak dari jaringan internet. Ia menentukan "rute" tercepat agar paket data sampai ke tujuan.</p>
-                            <div class="mt-6 space-y-4">
-                                <div class="flex gap-4">
-                                    <div class="w-1 bg-gold"></div>
-                                    <div>
-                                        <h5 class="text-gold font-bold">Static Routing</h5>
-                                        <p class="text-sm">Ditentukan manual. Sangat aman tapi tidak fleksibel.</p>
-                                    </div>
-                                </div>
-                                <div class="flex gap-4">
-                                    <div class="w-1 bg-silver"></div>
-                                    <div>
-                                        <h5 class="text-silver font-bold">Dynamic Routing</h5>
-                                        <p class="text-sm">Router "berbicara" satu sama lain (OSPF, RIP, BGP) untuk mencari rute.</p>
+                            <div class="space-y-4">
+                                <p>Routing statik di Debian adalah proses pengaturan jalur jaringan secara manual agar sistem dapat menghubungkan satu jaringan ke jaringan lain melalui gateway tertentu. Konfigurasi ini biasanya digunakan ketika Debian dijadikan sebagai router atau gateway dalam jaringan kecil. Routing statik bersifat tetap dan tidak berubah kecuali diubah secara manual oleh administrator.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Cek IP & Perintah Sementara",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Pertama, cek dulu IP yang ada di Debian dengan perintah:</p>
+                                <pre class="bg-black/30 p-3 rounded"><code>ip a</code></pre>
+
+                                <p>Kalau mau menambahkan routing statik sementara (hilang setelah reboot), gunakan perintah:</p>
+                                <pre class="bg-black/30 p-3 rounded"><code>ip route add 192.168.20.0/24 via 192.168.10.1 dev ens33</code></pre>
+                                <p>Perintah di atas menambahkan rute ke jaringan 192.168.20.0/24 melalui gateway 192.168.10.1 pada interface <code>ens33</code>.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Routing Permanen",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Untuk membuat routing permanen, edit file konfigurasi jaringan:</p>
+                                <pre class="bg-black/30 p-3 rounded"><code>nano /etc/network/interfaces</code></pre>
+                                <p>Lalu tambahkan baris seperti ini pada interface yang sesuai:</p>
+                                <pre class="bg-black/30 p-3 rounded"><code>up ip route add 192.168.20.0/24 via 192.168.10.1</code></pre>
+                                <p>Setelah menyimpan, restart layanan jaringan:</p>
+                                <pre class="bg-black/30 p-3 rounded"><code>systemctl restart networking</code></pre>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Mengaktifkan IP Forwarding",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Jika Debian akan berfungsi sebagai router, aktifkan IP forwarding:</p>
+                                <pre class="bg-black/30 p-3 rounded"><code>nano /etc/sysctl.conf</code></pre>
+                                <p>Cari baris:</p>
+                                <pre class="bg-black/30 p-3 rounded"><code>#net.ipv4.ip_forward=1</code></pre>
+                                <p>Hapus tanda <code>#</code> sehingga menjadi <code>net.ipv4.ip_forward=1</code>, lalu jalankan:</p>
+                                <pre class="bg-black/30 p-3 rounded"><code>sysctl -p</code></pre>
+                            </div>
+                        `
+                    },
+                    {
+                        subtitle: "Tes Koneksi",
+                        body: `
+                            <div class="space-y-4">
+                                <p>Tes koneksi pakai:</p>
+                                <pre class="bg-black/30 p-3 rounded"><code>ping 192.168.20.1</code></pre>
+                                <p>Jika menerima balasan (reply), berarti routing berhasil dikonfigurasi.</p>
+                            </div>
+                        `
+                    }
+                    ,
+                    {
+                        subtitle: "Topologi Jaringan",
+                        body: `
+                            <div class="space-y-4 text-center">
+                                <p>Contoh topologi sederhana ketika Debian bertindak sebagai router antara dua jaringan.</p>
+                                <div class="p-6 bg-black/50 rounded-xl border border-gold/20 inline-block w-full max-w-lg mx-auto">
+                                    <img id="topo-img" src="assets/topologi.jpeg" alt="Topologi Routing Debian" class="w-full h-auto rounded" onerror="if(this.src.indexOf('topologi.jpeg')>-1){this.style.display='none';document.getElementById('topo-fallback').style.display='block'}else{this.src='assets/topologi.jpeg'}" />
+
+                                    <div id="topo-fallback" style="display:none;">
+                                        <svg viewBox="0 0 500 260" class="w-full h-auto mx-auto" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="190" y="20" width="120" height="60" rx="8" fill="none" stroke="#D4AF37" stroke-width="2" />
+                                            <text x="250" y="55" fill="#D4AF37" text-anchor="middle" font-size="12" font-family="Rajdhani, sans-serif">Router Debian</text>
+
+                                            <line x1="250" y1="80" x2="140" y2="140" stroke="#C0C0C0" stroke-width="2" stroke-dasharray="4" />
+                                            <line x1="250" y1="80" x2="360" y2="140" stroke="#C0C0C0" stroke-width="2" stroke-dasharray="4" />
+
+                                            <circle cx="120" cy="170" r="36" fill="none" stroke="#C0C0C0" stroke-width="2" />
+                                            <text x="120" y="160" fill="#C0C0C0" text-anchor="middle" font-size="11">Net A</text>
+                                            <text x="120" y="176" fill="#C0C0C0" text-anchor="middle" font-size="10">192.168.10.0/24</text>
+
+                                            <circle cx="380" cy="170" r="36" fill="none" stroke="#C0C0C0" stroke-width="2" />
+                                            <text x="380" y="160" fill="#C0C0C0" text-anchor="middle" font-size="11">Net B</text>
+                                            <text x="380" y="176" fill="#C0C0C0" text-anchor="middle" font-size="10">192.168.20.0/24</text>
+
+                                            <rect x="90" y="200" width="40" height="20" rx="4" fill="none" stroke="#C0C0C0" stroke-width="1" />
+                                            <text x="110" y="214" fill="#C0C0C0" text-anchor="middle" font-size="9">Host A</text>
+
+                                            <rect x="360" y="200" width="40" height="20" rx="4" fill="none" stroke="#C0C0C0" stroke-width="1" />
+                                            <text x="380" y="214" fill="#C0C0C0" text-anchor="middle" font-size="9">Host B</text>
+                                        </svg>
                                     </div>
                                 </div>
                             </div>
@@ -490,6 +475,8 @@
             const targetSection = document.getElementById(id);
             if (targetSection) targetSection.classList.remove('hidden');
             
+            if (id === 'progress') renderProgress();
+            
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('text-gold', 'border-b', 'border-gold');
             });
@@ -501,6 +488,11 @@
             window.scrollTo(0, 0);
         }
 
+        function renderProgress() {
+            // Image-only progress view: no textual or numeric progress displayed.
+            // Function intentionally left blank so showSection('progress') can call it safely.
+        }
+
         function createBabList() {
             const list = document.getElementById('bab-list');
             if (!list) return;
@@ -510,7 +502,7 @@
                 btn.className = `w-full text-left p-4 rounded glass-card hover:bg-white/10 transition flex items-center justify-between group ${currentBab === i ? 'border-gold bg-white/5' : 'silver-border'}`;
                 btn.innerHTML = `
                     <span class="${currentBab === i ? 'text-gold' : ''}">BAB ${i}: ${materiData[i].title}</span>
-                    <span class="opacity-0 group-hover:opacity-100 transition text-gold">▶</span>
+                    <span class="opacity-0 group-hover:opacity-100 transition text-gold">▶️</span>
                 `;
                 btn.onclick = () => loadBab(i);
                 list.appendChild(btn);
@@ -617,5 +609,3 @@
     </style>
 </body>
 </html>
-
-
